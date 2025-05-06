@@ -22,17 +22,18 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
       overflow: hidden;
+      padding: 20px;
+    }
+
+    .scaler {
+      transform-origin: top left;
+      display: inline-block;
     }
 
     .container {
       display: flex;
-      flex-wrap: nowrap; /* Keep items in a single row */
-      justify-content: space-evenly;
-      align-items: center;
       gap: 10px;
-      width: 100%;
       padding: 20px;
       background: rgba(255, 255, 255, 0.2);
       border-radius: 2rem;
@@ -43,7 +44,7 @@
       opacity: 0;
       transform: translateY(40px);
       animation: dockIntro 0.8s ease-out forwards;
-      overflow-x: auto; /* Allow scroll if too narrow */
+      width: max-content;
     }
 
     @keyframes dockIntro {
@@ -54,15 +55,14 @@
     }
 
     .box {
-      --size: clamp(50px, 8vw, 120px); /* Responsively scale based on width */
-      width: var(--size);
-      height: var(--size);
-      flex-shrink: 0; /* Prevent squashing */
+      width: 100px;
+      height: 100px;
       transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
       text-decoration: none;
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
       cursor: pointer;
       background-color: transparent;
     }
@@ -106,55 +106,68 @@
       60%  { transform: scale(1.6) translateY(-10%); }
       100% { transform: scale(1.6) translateY(-15%); }
     }
-
-    @media (max-width: 600px) {
-      .box {
-        --size: clamp(40px, 10vw, 80px);
-      }
-
-      .item img {
-        width: 80%;
-        height: 80%;
-      }
-    }
   </style>
 </head>
 <body>
 
   <div class="dock-wrapper">
-    <div class="container">
-      <a class="box" href="https://www.uckfield.college/170/mental-health-and-emotional-well-being-for-students" target="_blank">
-        <div class="item"><img src="Mental Health.png" alt="Mental Health" /></div>
-      </a>
-      <a class="box" href="https://www.google.com/" target="_blank">
-        <div class="item"><img src="Google.png" alt="Google" /></div>
-      </a>
-      <a class="box" href="https://drive.google.com" target="_blank">
-        <div class="item"><img src="Google Drive (Light).png" alt="Google Drive" /></div>
-      </a>
-      <a class="box" href="https://mail.google.com" target="_blank">
-        <div class="item"><img src="Google Gmail.png" alt="Google Gmail" /></div>
-      </a>
-      <a class="box" href="https://calendar.google.com" target="_blank">
-        <div class="item"><img src="Google Calendar.png" alt="Google Calendar" /></div>
-      </a>
-      <a class="box" href="https://classroom.google.com" target="_blank">
-        <div class="item"><img src="Google Classroom.png" alt="Google Classroom" /></div>
-      </a>
-      <a class="box" href="https://edulinkone.uctc.org.uk/" target="_blank">
-        <div class="item"><img src="Edulink One MacOS Style.png" alt="Edulink One" /></div>
-      </a>
-      <a class="box" href="https://docs.google.com" target="_blank">
-        <div class="item"><img src="Google Docs.png" alt="Google Docs" /></div>
-      </a>
-      <a class="box" href="https://sheets.google.com" target="_blank">
-        <div class="item"><img src="Google Sheets.png" alt="Google Sheets" /></div>
-      </a>
-      <a class="box" href="https://slides.google.com" target="_blank">
-        <div class="item"><img src="Google Slides.png" alt="Google Slides" /></div>
-      </a>
+    <div class="scaler" id="scaler">
+      <div class="container" id="dock">
+        <a class="box" href="https://www.uckfield.college/170/mental-health-and-emotional-well-being-for-students" target="_blank">
+          <div class="item"><img src="Mental Health.png" alt="Mental Health" /></div>
+        </a>
+        <a class="box" href="https://www.google.com/" target="_blank">
+          <div class="item"><img src="Google.png" alt="Google" /></div>
+        </a>
+        <a class="box" href="https://drive.google.com" target="_blank">
+          <div class="item"><img src="Google Drive (Light).png" alt="Google Drive" /></div>
+        </a>
+        <a class="box" href="https://mail.google.com" target="_blank">
+          <div class="item"><img src="Google Gmail.png" alt="Google Gmail" /></div>
+        </a>
+        <a class="box" href="https://calendar.google.com" target="_blank">
+          <div class="item"><img src="Google Calendar.png" alt="Google Calendar" /></div>
+        </a>
+        <a class="box" href="https://classroom.google.com" target="_blank">
+          <div class="item"><img src="Google Classroom.png" alt="Google Classroom" /></div>
+        </a>
+        <a class="box" href="https://edulinkone.uctc.org.uk/" target="_blank">
+          <div class="item"><img src="Edulink One MacOS Style.png" alt="Edulink One" /></div>
+        </a>
+        <a class="box" href="https://docs.google.com" target="_blank">
+          <div class="item"><img src="Google Docs.png" alt="Google Docs" /></div>
+        </a>
+        <a class="box" href="https://sheets.google.com" target="_blank">
+          <div class="item"><img src="Google Sheets.png" alt="Google Sheets" /></div>
+        </a>
+        <a class="box" href="https://slides.google.com" target="_blank">
+          <div class="item"><img src="Google Slides.png" alt="Google Slides" /></div>
+        </a>
+      </div>
     </div>
   </div>
+
+  <script>
+    function scaleDock() {
+      const scaler = document.getElementById('scaler');
+      const container = document.getElementById('dock');
+      const wrapper = document.querySelector('.dock-wrapper');
+
+      const availableWidth = wrapper.clientWidth - 40; // Account for padding
+      const dockWidth = container.scrollWidth;
+
+      let scale = 1;
+
+      if (dockWidth > availableWidth) {
+        scale = availableWidth / dockWidth;
+      }
+
+      scaler.style.transform = `scale(${scale})`;
+    }
+
+    window.addEventListener('load', scaleDock);
+    window.addEventListener('resize', scaleDock);
+  </script>
 
 </body>
 </html>
