@@ -61,23 +61,24 @@
       justify-content: center;
       position: relative;
       cursor: grab;
+      background-color: transparent; /* Ensures there's no background in the boxes */
     }
 
     .item {
       width: 100%;
       height: 100%;
-      border-radius: 16px;
-      background-color: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
       display: flex;
       justify-content: center;
       align-items: center;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
     }
 
     .item img {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* Ensures the icon scales without distortion */
+      object-fit: cover; /* Ensures the icon fills the available space without distortion */
       pointer-events: none;
       transition: transform 0.2s ease;
     }
@@ -105,12 +106,12 @@
     }
 
     /* Add colors for different icons */
-    .box:nth-child(1) .item { background-color: #ff3b30; }
-    .box:nth-child(2) .item { background-color: #ff9500; }
-    .box:nth-child(3) .item { background-color: #ffcc00; }
-    .box:nth-child(4) .item { background-color: #34c759; }
-    .box:nth-child(5) .item { background-color: #007aff; }
-    .box:nth-child(6) .item { background-color: #5ac8fa; }
+    .box:nth-child(1) .item { background-color: transparent; }
+    .box:nth-child(2) .item { background-color: transparent; }
+    .box:nth-child(3) .item { background-color: transparent; }
+    .box:nth-child(4) .item { background-color: transparent; }
+    .box:nth-child(5) .item { background-color: transparent; }
+    .box:nth-child(6) .item { background-color: transparent; }
 
     @media (max-width: 600px) {
       .box {
