@@ -65,11 +65,11 @@
     .item img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      border-radius: 12px; /* optional for a macOS-style rounded square */
+      object-fit: contain; /* scale entire image inside box, respecting transparent padding */
       pointer-events: none;
       transition: transform 0.2s ease;
     }
+
 
 
 
