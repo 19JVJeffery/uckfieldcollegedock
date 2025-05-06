@@ -84,14 +84,15 @@
       transition: transform 0.2s ease;
     }
 
+    /* Adjust hover effect */
     .box:hover {
-      transform: scale(1.6) translateY(-15%);
+      transform: scale(1.3) translateY(-15%); /* Moderate scale to prevent overlap */
       z-index: 3;
     }
 
     .box:hover + .box,
     .box:has(+ .box:hover) {
-      transform: scale(1.3) translateY(-8%);
+      transform: scale(1.1) translateY(-8%); /* Slightly smaller scale for neighboring boxes */
       z-index: 2;
     }
 
@@ -115,14 +116,6 @@
         width: 80%;
         height: 80%;
       }
-    }
-
-    /* Smooth dragging effect */
-    .dragging {
-      opacity: 0.7;
-      transition: opacity 0.2s ease;
-      z-index: 1000; /* Ensures dragged element is on top */
-      pointer-events: none; /* Prevents interaction with the dragged element */
     }
   </style>
 </head>
@@ -172,42 +165,6 @@
       });
     });
 
-    // Smooth Dragging Implementation
-    const dock = document.getElementById('dock');
-    let dragged = null;
-
-    dock.addEventListener('dragstart', e => {
-      if (e.target.classList.contains('box')) {
-        dragged = e.target;
-        dragged.classList.add('dragging'); // Add the dragging class for smooth effect
-        e.dataTransfer.effectAllowed = 'move';
-      }
-    });
-
-    dock.addEventListener('dragover', e => {
-      e.preventDefault();
-      const target = e.target.closest('.box');
-      if (target && target !== dragged) {
-        const boxes = Array.from(dock.children);
-        const draggedIndex = boxes.indexOf(dragged);
-        const targetIndex = boxes.indexOf(target);
-        if (draggedIndex < targetIndex) {
-          dock.insertBefore(dragged, target.nextSibling);
-        } else {
-          dock.insertBefore(dragged, target);
-        }
-      }
-    });
-
-    dock.addEventListener('dragend', () => {
-      dragged.classList.remove('dragging'); // Remove the dragging class after the drag ends
-      dragged = null;
-    });
-
-    // Make each box draggable
-    document.querySelectorAll('.box').forEach(box => {
-      box.setAttribute('draggable', true);
-    });
   </script>
 
 </body>
