@@ -18,6 +18,7 @@
     }
 
     .dock-wrapper {
+      padding: 60px;
       width: 100%;
       height: 100%;
       display: flex;
@@ -33,7 +34,7 @@
       padding: 1.5vh 2vw;
       background: rgba(255, 255, 255, 0.2);
       border-radius: 2rem;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); /* Strong shadow */
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       z-index: 10;
@@ -50,7 +51,7 @@
     }
 
     .box {
-      --size: clamp(48px, 6vh, 80px);
+      --size: clamp(80px, 10vw, 120px); /* Increased box size */
       width: var(--size);
       height: var(--size);
       transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
@@ -62,16 +63,24 @@
       cursor: grab;
     }
 
+    .item {
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      background-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     .item img {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* scale entire image inside box, respecting transparent padding */
+      object-fit: contain; /* Ensures the icon scales without distortion */
       pointer-events: none;
       transition: transform 0.2s ease;
     }
-
-
-
 
     .box:hover {
       transform: scale(1.6) translateY(-15%);
@@ -95,14 +104,22 @@
       100% { transform: scale(1.6) translateY(-15%); }
     }
 
+    /* Add colors for different icons */
+    .box:nth-child(1) .item { background-color: #ff3b30; }
+    .box:nth-child(2) .item { background-color: #ff9500; }
+    .box:nth-child(3) .item { background-color: #ffcc00; }
+    .box:nth-child(4) .item { background-color: #34c759; }
+    .box:nth-child(5) .item { background-color: #007aff; }
+    .box:nth-child(6) .item { background-color: #5ac8fa; }
+
     @media (max-width: 600px) {
-      .item img {
-        width: 65%;
-        height: 65%;
+      .box {
+        --size: clamp(60px, 8vw, 80px); /* Smaller box size on mobile */
       }
 
-      .box {
-        --size: clamp(40px, 5vh, 60px);
+      .item img {
+        width: 80%;
+        height: 80%;
       }
     }
   </style>
@@ -112,34 +129,22 @@
   <div class="dock-wrapper">
     <div class="container" id="dock">
       <a class="box" href="https://example.com/1" target="_blank">
-        <div class="item"><img src="Mental Health.png" alt="Mental Health" /></div>
+        <div class="item"><img src="img/Mental Health.png" alt="Mental Health" /></div>
       </a>
       <a class="box" href="https://example.com/2" target="_blank">
-        <div class="item"><img src="Google.icns" alt="Google" /></div>
+        <div class="item"><img src="img/Google.icns" alt="Google" /></div>
       </a>
       <a class="box" href="https://example.com/3" target="_blank">
-        <div class="item"><img src="Google Drive (Light).icns" alt="Drive" /></div>
+        <div class="item"><img src="img/Google Drive (Light).icns" alt="Google Drive" /></div>
       </a>
       <a class="box" href="https://example.com/4" target="_blank">
-        <div class="item"><img src="Google Gmail.icns" alt="Gmail" /></div>
+        <div class="item"><img src="img/Google Gmail.icns" alt="Google Gmail" /></div>
       </a>
       <a class="box" href="https://example.com/5" target="_blank">
-        <div class="item"><img src="Google Calendar.icns" alt="Calendar" /></div>
+        <div class="item"><img src="img/Google Calendar.icns" alt="Google Calendar" /></div>
       </a>
       <a class="box" href="https://example.com/6" target="_blank">
-        <div class="item"><img src="Google Classroom.icns" alt="Classroom" /></div>
-      </a>
-      <a class="box" href="https://example.com/7" target="_blank">
-        <div class="item"><img src="Edulink One MacOS Style.png" alt="Edulink" /></div>
-      </a>
-      <a class="box" href="https://example.com/8" target="_blank">
-        <div class="item"><img src="Google Docs.icns" alt="Docs" /></div>
-      </a>
-      <a class="box" href="https://example.com/9" target="_blank">
-        <div class="item"><img src="Google Sheets.icns" alt="Sheets" /></div>
-      </a>
-      <a class="box" href="https://example.com/10" target="_blank">
-        <div class="item"><img src="Google Slides.icns" alt="Slides" /></div>
+        <div class="item"><img src="img/Google Classroom.icns" alt="Google Classroom" /></div>
       </a>
     </div>
   </div>
@@ -183,6 +188,7 @@
       dragged = null;
     });
 
+    // Make each box draggable
     document.querySelectorAll('.box').forEach(box => {
       box.setAttribute('draggable', true);
     });
