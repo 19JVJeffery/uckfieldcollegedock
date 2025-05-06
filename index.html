@@ -23,13 +23,13 @@
       justify-content: center;
       align-items: center;
       overflow: hidden;
-      padding: 20px; /* Add padding to avoid clipping at edges */
+      padding: 20px; /* Prevent clipping at edges */
     }
 
     .container {
       display: flex;
       gap: 10px;
-      padding: 20px; /* Padding for spacing between icons */
+      padding: 20px;
       background: rgba(255, 255, 255, 0.2);
       border-radius: 2rem;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
@@ -39,8 +39,7 @@
       opacity: 0;
       transform: translateY(40px);
       animation: dockIntro 0.8s ease-out forwards;
-      width: 100%;
-      max-width: 100%; /* Ensure container can scale to iframe width */
+      width: auto; /* This will be dynamically set */
       box-sizing: border-box;
     }
 
@@ -79,7 +78,7 @@
     .item img {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* Ensure images fit without being cut off */
+      object-fit: contain;
       pointer-events: none;
       transition: transform 0.2s ease;
     }
@@ -155,6 +154,22 @@
       </a>
     </div>
   </div>
+
+  <script>
+    // Function to resize the dock based on iframe width
+    function resizeDock() {
+      const dockWrapper = document.querySelector('.dock-wrapper');
+      const container = document.querySelector('.container');
+      const iframeWidth = dockWrapper.clientWidth;
+
+      // Set container width to match the iframe width
+      container.style.width = iframeWidth - 40 + 'px'; // 40px for padding on both sides
+    }
+
+    // Call resizeDock when the page loads and when resizing
+    window.addEventListener('load', resizeDock);
+    window.addEventListener('resize', resizeDock);
+  </script>
 
 </body>
 </html>
