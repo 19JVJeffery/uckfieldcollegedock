@@ -14,6 +14,7 @@
       height: 100%;
       width: 100%;
       font-family: system-ui, sans-serif;
+      overflow: hidden;
     }
 
     .dock-wrapper {
@@ -22,8 +23,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 10px;
       overflow: hidden;
-      padding: 20px;
     }
 
     .scaler {
@@ -32,7 +33,8 @@
     }
 
     .container {
-      display: flex;
+      display: inline-flex;
+      white-space: nowrap;
       gap: 10px;
       padding: 20px;
       background: rgba(255, 255, 255, 0.2);
@@ -40,7 +42,6 @@
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      z-index: 10;
       opacity: 0;
       transform: translateY(40px);
       animation: dockIntro 0.8s ease-out forwards;
@@ -150,18 +151,13 @@
   <script>
     function scaleDock() {
       const scaler = document.getElementById('scaler');
-      const container = document.getElementById('dock');
+      const dock = document.getElementById('dock');
       const wrapper = document.querySelector('.dock-wrapper');
 
-      const availableWidth = wrapper.clientWidth - 40; // Account for padding
-      const dockWidth = container.scrollWidth;
+      const availableWidth = wrapper.clientWidth;
+      const dockWidth = dock.scrollWidth;
 
-      let scale = 1;
-
-      if (dockWidth > availableWidth) {
-        scale = availableWidth / dockWidth;
-      }
-
+      const scale = Math.min(1, availableWidth / dockWidth);
       scaler.style.transform = `scale(${scale})`;
     }
 
