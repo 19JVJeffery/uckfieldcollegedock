@@ -4,27 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
       width: 100%;
-      font-family: system-ui, sans-serif;
       overflow: hidden;
-    }
-
-    .dock-wrapper {
-      width: 100%;
-      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 10px;
-      overflow: hidden;
+      background: #f0f0f0;
     }
 
     .scaler {
@@ -42,40 +31,17 @@
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      opacity: 0;
-      transform: translateY(40px);
-      animation: dockIntro 0.8s ease-out forwards;
-      width: max-content;
-    }
-
-    @keyframes dockIntro {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     .box {
       width: 100px;
       height: 100px;
-      transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      cursor: pointer;
-      background-color: transparent;
-    }
-
-    .item {
-      width: 100%;
-      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       border-radius: 16px;
       overflow: hidden;
+      transition: transform 0.3s;
     }
 
     .item img {
@@ -83,68 +49,23 @@
       height: 100%;
       object-fit: contain;
       pointer-events: none;
-      transition: transform 0.2s ease;
-    }
-
-    .box:hover {
-      transform: scale(1.3) translateY(-15%);
-      z-index: 3;
-    }
-
-    .box:hover + .box,
-    .box:has(+ .box:hover) {
-      transform: scale(1.1) translateY(-8%);
-      z-index: 2;
-    }
-
-    .box.clicked {
-      animation: bounce 0.4s ease;
-    }
-
-    @keyframes bounce {
-      0%   { transform: scale(1.6) translateY(-15%); }
-      30%  { transform: scale(1.5) translateY(-50%); }
-      60%  { transform: scale(1.6) translateY(-10%); }
-      100% { transform: scale(1.6) translateY(-15%); }
     }
   </style>
 </head>
 <body>
 
-  <div class="dock-wrapper">
-    <div class="scaler" id="scaler">
-      <div class="container" id="dock">
-        <a class="box" href="https://www.uckfield.college/170/mental-health-and-emotional-well-being-for-students" target="_blank">
-          <div class="item"><img src="Mental Health.png" alt="Mental Health" /></div>
-        </a>
-        <a class="box" href="https://www.google.com/" target="_blank">
-          <div class="item"><img src="Google.png" alt="Google" /></div>
-        </a>
-        <a class="box" href="https://drive.google.com" target="_blank">
-          <div class="item"><img src="Google Drive (Light).png" alt="Google Drive" /></div>
-        </a>
-        <a class="box" href="https://mail.google.com" target="_blank">
-          <div class="item"><img src="Google Gmail.png" alt="Google Gmail" /></div>
-        </a>
-        <a class="box" href="https://calendar.google.com" target="_blank">
-          <div class="item"><img src="Google Calendar.png" alt="Google Calendar" /></div>
-        </a>
-        <a class="box" href="https://classroom.google.com" target="_blank">
-          <div class="item"><img src="Google Classroom.png" alt="Google Classroom" /></div>
-        </a>
-        <a class="box" href="https://edulinkone.uctc.org.uk/" target="_blank">
-          <div class="item"><img src="Edulink One MacOS Style.png" alt="Edulink One" /></div>
-        </a>
-        <a class="box" href="https://docs.google.com" target="_blank">
-          <div class="item"><img src="Google Docs.png" alt="Google Docs" /></div>
-        </a>
-        <a class="box" href="https://sheets.google.com" target="_blank">
-          <div class="item"><img src="Google Sheets.png" alt="Google Sheets" /></div>
-        </a>
-        <a class="box" href="https://slides.google.com" target="_blank">
-          <div class="item"><img src="Google Slides.png" alt="Google Slides" /></div>
-        </a>
-      </div>
+  <div class="scaler" id="scaler">
+    <div class="container" id="dock">
+      <a class="box" href="#"><div class="item"><img src="Mental Health.png" alt="Mental Health"></div></a>
+      <a class="box" href="#"><div class="item"><img src="Google.png" alt="Google"></div></a>
+      <a class="box" href="#"><div class="item"><img src="Google Drive (Light).png" alt="Google Drive"></div></a>
+      <a class="box" href="#"><div class="item"><img src="Google Gmail.png" alt="Gmail"></div></a>
+      <a class="box" href="#"><div class="item"><img src="Google Calendar.png" alt="Calendar"></div></a>
+      <a class="box" href="#"><div class="item"><img src="Google Classroom.png" alt="Classroom"></div></a>
+      <a class="box" href="#"><div class="item"><img src="Edulink One MacOS Style.png" alt="Edulink"></div></a>
+      <a class="box" href="#"><div class="item"><img src="Google Docs.png" alt="Docs"></div></a>
+      <a class="box" href="#"><div class="item"><img src="Google Sheets.png" alt="Sheets"></div></a>
+      <a class="box" href="#"><div class="item"><img src="Google Slides.png" alt="Slides"></div></a>
     </div>
   </div>
 
@@ -152,12 +73,15 @@
     function scaleDock() {
       const scaler = document.getElementById('scaler');
       const dock = document.getElementById('dock');
-      const wrapper = document.querySelector('.dock-wrapper');
+      const parent = document.body;
 
-      const availableWidth = wrapper.clientWidth;
+      const availableWidth = parent.clientWidth;
+      const availableHeight = parent.clientHeight;
+
       const dockWidth = dock.scrollWidth;
+      const dockHeight = dock.scrollHeight;
 
-      const scale = Math.min(1, availableWidth / dockWidth);
+      const scale = Math.min(availableWidth / dockWidth, availableHeight / dockHeight);
       scaler.style.transform = `scale(${scale})`;
     }
 
