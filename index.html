@@ -23,12 +23,16 @@
       justify-content: center;
       align-items: center;
       overflow: hidden;
-      padding: 20px; /* Prevent clipping at edges */
+      padding: 20px;
     }
 
     .container {
       display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 10px;
+      width: 100%;
+      max-width: 1200px;
       padding: 20px;
       background: rgba(255, 255, 255, 0.2);
       border-radius: 2rem;
@@ -39,8 +43,6 @@
       opacity: 0;
       transform: translateY(40px);
       animation: dockIntro 0.8s ease-out forwards;
-      width: auto; /* This will be dynamically set */
-      box-sizing: border-box;
     }
 
     @keyframes dockIntro {
@@ -59,7 +61,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
       cursor: pointer;
       background-color: transparent;
     }
@@ -72,7 +73,6 @@
       align-items: center;
       border-radius: 16px;
       overflow: hidden;
-      position: relative;
     }
 
     .item img {
@@ -105,10 +105,9 @@
       100% { transform: scale(1.6) translateY(-15%); }
     }
 
-    /* Responsive adjustments */
     @media (max-width: 600px) {
       .box {
-        --size: clamp(60px, 8vw, 80px); /* Smaller box size on mobile */
+        --size: clamp(60px, 8vw, 80px);
       }
 
       .item img {
@@ -121,7 +120,8 @@
 <body>
 
   <div class="dock-wrapper">
-    <div class="container" id="dock">
+    <div class="container">
+      <!-- Dock Items -->
       <a class="box" href="https://www.uckfield.college/170/mental-health-and-emotional-well-being-for-students" target="_blank">
         <div class="item"><img src="Mental Health.png" alt="Mental Health" /></div>
       </a>
@@ -154,22 +154,6 @@
       </a>
     </div>
   </div>
-
-  <script>
-    // Function to resize the dock based on iframe width
-    function resizeDock() {
-      const dockWrapper = document.querySelector('.dock-wrapper');
-      const container = document.querySelector('.container');
-      const iframeWidth = dockWrapper.clientWidth;
-
-      // Set container width to match the iframe width
-      container.style.width = iframeWidth - 40 + 'px'; // 40px for padding on both sides
-    }
-
-    // Call resizeDock when the page loads and when resizing
-    window.addEventListener('load', resizeDock);
-    window.addEventListener('resize', resizeDock);
-  </script>
 
 </body>
 </html>
