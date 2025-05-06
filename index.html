@@ -79,7 +79,7 @@
     .item img {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* Ensures the icon fills the available space without distortion */
+      object-fit: contain; /* Ensures the image is fully contained within the box */
       pointer-events: none;
       transition: transform 0.2s ease;
     }
@@ -120,8 +120,7 @@
     /* Smooth dragging effect */
     .dragging {
       opacity: 0.7;
-      transform: scale(1.2);
-      transition: transform 0.2s ease, opacity 0.2s ease;
+      transition: opacity 0.2s ease;
       z-index: 1000; /* Ensures dragged element is on top */
       pointer-events: none; /* Prevents interaction with the dragged element */
     }
