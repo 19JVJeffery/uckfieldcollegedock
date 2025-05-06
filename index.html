@@ -24,14 +24,15 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: visible;
       position: relative;
+      overflow: visible;
     }
 
     .container {
       display: flex;
-      gap: clamp(0.5rem, 1vw, 1rem);
-      padding: 1.5vh 2vw;
+      flex-wrap: wrap; /* Allows the dock to wrap on smaller screens */
+      gap: 10px; /* Adjust gap between icons */
+      padding: 20px; /* Margin for spacing */
       background: rgba(255, 255, 255, 0.2);
       border-radius: 2rem;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); /* Strong shadow */
@@ -41,6 +42,8 @@
       opacity: 0;
       transform: translateY(40px);
       animation: dockIntro 0.8s ease-out forwards;
+      max-width: 95%; /* Ensure it scales down on smaller screens */
+      max-height: 80%; /* Prevents dock from taking up the entire screen */
     }
 
     @keyframes dockIntro {
@@ -60,9 +63,8 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      cursor: grab;
+      cursor: pointer;
       background-color: transparent; /* Ensures there's no background in the boxes */
-      user-select: none; /* Prevents text selection while dragging */
     }
 
     .item {
@@ -155,17 +157,6 @@
       </a>
     </div>
   </div>
-
-  <script>
-    // Bounce on click
-    document.querySelectorAll('.box').forEach(box => {
-      box.addEventListener('click', () => {
-        box.classList.add('clicked');
-        setTimeout(() => box.classList.remove('clicked'), 400);
-      });
-    });
-
-  </script>
 
 </body>
 </html>
