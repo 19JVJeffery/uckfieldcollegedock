@@ -62,6 +62,7 @@
       position: relative;
       cursor: grab;
       background-color: transparent; /* Ensures there's no background in the boxes */
+      user-select: none; /* Prevents text selection while dragging */
     }
 
     .item {
@@ -115,6 +116,13 @@
         height: 80%;
       }
     }
+
+    /* Smooth dragging effect */
+    .dragging {
+      opacity: 0.6;
+      transform: scale(1.2);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
   </style>
 </head>
 <body>
@@ -163,13 +171,14 @@
       });
     });
 
-    // Drag and reorder
+    // Smooth Dragging Implementation
     const dock = document.getElementById('dock');
     let dragged = null;
 
     dock.addEventListener('dragstart', e => {
       if (e.target.classList.contains('box')) {
         dragged = e.target;
+        dragged.classList.add('dragging'); // Add the dragging class for smooth effect
         e.dataTransfer.effectAllowed = 'move';
       }
     });
@@ -190,6 +199,7 @@
     });
 
     dock.addEventListener('dragend', () => {
+      dragged.classList.remove('dragging'); // Remove the dragging class after the drag ends
       dragged = null;
     });
 
