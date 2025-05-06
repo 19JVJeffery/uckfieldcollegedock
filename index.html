@@ -156,30 +156,20 @@
   </div>
 
   <script>
-  // Function to resize the dock based on iframe width
-  function resizeDock() {
-    const dockWrapper = document.querySelector('.dock-wrapper');
-    const container = document.querySelector('.container');
-    const iframeWidth = dockWrapper.clientWidth;
-    container.style.width = iframeWidth - 40 + 'px'; // 40px for padding
-  }
+    // Function to resize the dock based on iframe width
+    function resizeDock() {
+      const dockWrapper = document.querySelector('.dock-wrapper');
+      const container = document.querySelector('.container');
+      const iframeWidth = dockWrapper.clientWidth;
 
-  window.addEventListener('load', resizeDock);
-  window.addEventListener('resize', resizeDock);
+      // Set container width to match the iframe width
+      container.style.width = iframeWidth - 40 + 'px'; // 40px for padding on both sides
+    }
 
-  // Delay navigation to show bounce animation
-  document.querySelectorAll('.box').forEach(box => {
-    box.addEventListener('click', e => {
-      e.preventDefault();
-      box.classList.add('clicked');
-      const link = box.getAttribute('href');
-      setTimeout(() => {
-        window.open(link, '_blank');
-      }, 400); // Match the animation duration
-    });
-  });
-</script>
-
+    // Call resizeDock when the page loads and when resizing
+    window.addEventListener('load', resizeDock);
+    window.addEventListener('resize', resizeDock);
+  </script>
 
 </body>
 </html>
