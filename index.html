@@ -10,12 +10,11 @@
       height: 100%;
       width: 100%;
       overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       background: #f0f0f0;
       font-family: system-ui, sans-serif;
+      position: relative; /* needed for absolute centering */
     }
+
 
     .scaler {
       transform-origin: top left;
@@ -128,24 +127,52 @@
       const scaler = document.getElementById('scaler');
       const dock = document.getElementById('dock');
       const parent = document.body;
-
+  
+      const padding = 40; // pixels of padding around the dock
+      const availableWidth = parent.clientWidth - padding;
+      const availableHeight = parent.clientHeight - padding;
+  
+      // Get natural (unscaled) size
+      scaler.style.transform = 'scale(1)'; // reset scale to measure natural size
       const dockWidth = dock.scrollWidth;
       const dockHeight = dock.scrollHeight;
-
-      const availableWidth = parent.clientWidth;
-      const availableHeight = parent.clientHeight;
-
+  
+      // Scale to fit width and stay within height
       const scale = Math.min(
         availableWidth / dockWidth,
         availableHeight / dockHeight
       );
-
+  
       scaler.style.transform = `scale(${scale})`;
+  
+      // Center manually
+      scaler.style.position = 'absolute';
+      scaler.style.left = '50%';
+      scaler.style.top = '50%';
+      scaler.style.transform += ' translate(-50%, -50%)';
     }
-
-    window.addEventListener('load', scaleDock);
+  
+    // Wait for images to fully load before scaling
+    window.addEventListener('load', () => {
+      const images = document.querySelectorAll('img');
+      let loaded = 0;
+  
+      images.forEach(img => {
+        if (img.complete) {
+          loaded++;
+        } else {
+          img.addEventListener('load', () => {
+            loaded++;
+            if (loaded === images.length) scaleDock();
+          });
+        }
+      });
+  
+      if (loaded === images.length) scaleDock();
+    });
+  
     window.addEventListener('resize', scaleDock);
-
+  
     // Optional: Click-to-bounce effect
     document.querySelectorAll('.box').forEach(box => {
       box.addEventListener('click', e => {
@@ -154,6 +181,7 @@
       });
     });
   </script>
+  
 
 </body>
 </html>
