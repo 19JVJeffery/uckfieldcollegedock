@@ -10,7 +10,7 @@
       height: 100%;
       width: 100%;
       overflow: hidden;
-      /* background: #f0f0f0; */
+      background: #f0f0f0;
       font-family: system-ui, sans-serif;
       position: relative; /* needed for absolute centering */
     }
@@ -28,7 +28,7 @@
       padding: 20px;
       background: rgba(255, 255, 255, 0.2);
       border-radius: 2rem;
-      box-shadow: 0 20px 15px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 15px 15px rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
     }
@@ -128,7 +128,7 @@
       const dock = document.getElementById('dock');
       const parent = document.body;
   
-      const padding = 40; // pixels of padding around the dock
+      const padding = 120; // pixels of padding around the dock
       const availableWidth = parent.clientWidth - padding;
       const availableHeight = parent.clientHeight - padding;
   
