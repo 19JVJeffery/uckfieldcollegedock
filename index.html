@@ -127,23 +127,26 @@
       const dock = document.getElementById('dock');
       const parent = document.body;
     
-      const horizontalPadding = 80; // keep a bit of side padding
-      const verticalPadding = 25;   // smaller top/bottom padding
+      const horizontalPadding = 80; // generous left/right breathing room
+      const verticalPadding = 25;   // tighter top/bottom
     
       const availableWidth = parent.clientWidth - horizontalPadding;
       const availableHeight = parent.clientHeight - verticalPadding;
     
-      // Reset scale to get natural size
+      // Reset to natural size for measurement
       scaler.style.transform = 'scale(1)';
       const dockWidth = dock.scrollWidth;
       const dockHeight = dock.scrollHeight;
     
-      // Width is more important — height can be a bit relaxed
-      const widthScale = availableWidth / dockWidth;
-      const heightScale = availableHeight / dockHeight;
+      // Base scaling on width
+      let scale = availableWidth / dockWidth;
     
-      // Give more weight to width scaling, limit height scaling to not shrink too much
-      const scale = Math.min(widthScale, Math.max(heightScale, 0.9)); // tweak 0.9 as needed
+      // If the resulting scaled height is *too tall* for the available space, adjust
+      const scaledHeight = dockHeight * scale;
+      if (scaledHeight > availableHeight) {
+        // Only now consider height to reduce scale *just enough* to avoid clipping
+        scale = availableHeight / dockHeight;
+      }
     
       scaler.style.transform = `scale(${scale})`;
       scaler.style.position = 'absolute';
@@ -151,6 +154,7 @@
       scaler.style.top = '50%';
       scaler.style.transform += ' translate(-50%, -50%)';
     }
+
   
     // Wait for images to fully load before scaling
     window.addEventListener('load', () => {
